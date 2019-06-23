@@ -100,7 +100,6 @@ def move_doc():
     found = 0
     for doc in directories.values():
         if number_input in doc:
-            doc.remove(number_input)
             found += 1
 
     if found == 0:
@@ -109,13 +108,19 @@ def move_doc():
     else:
         shelf_input = input('Куда перекладываем: ')
 
-        for shelf, doc in directories.items():
+        for shelf in directories.keys():
             if shelf_input in shelf:
-                doc.append(number_input)
                 found += 1
 
-        if found < 2:
+        if found == 1:
             print('Такой полки не существует. Сначала создайте её командой "as".')
+            return TypeError
+        else:
+            for shelf, doc in directories.items():
+                if shelf_input in shelf:
+                    doc.append(number_input)
+                elif number_input in doc:
+                    doc.remove(number_input)
 
 
 def create_shelf():
@@ -133,6 +138,12 @@ def create_shelf():
         directories[new_shelf_input] = []
     else:
         print('Такая полка уже существует!')
+
+
+def show():
+    '''Вспомогательная функция для отладки'''
+    print(directories)
+    print(documents)
 
 
 def main():
@@ -161,6 +172,8 @@ def main():
             move_doc()
         elif user_input == 'as':
             create_shelf()
+        elif user_input == '1':
+            show()
         elif user_input == 'q':
             print('До свидания!')
             break
