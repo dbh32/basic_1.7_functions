@@ -11,6 +11,15 @@ directories = {
 }
 
 
+def show_names():
+    try:
+        for doc_search in documents:
+            names = doc_search['name']
+            print(f'{names}')
+    except KeyError:
+        print('Обнаружен документ без владельца!')
+
+
 def search_name():
     '''Ищет человека по номеру документа'''
     number_input = input('Номер документа: ')
@@ -148,6 +157,7 @@ def show():
 
 def main():
     print('p - найти человека по номеру документа')
+    print('ap - показать все имена владельцев')
     print('l - вывести список всех документов')
     print('s - показать, где хранится документ')
     print('a - добавить новый документ')
@@ -160,6 +170,8 @@ def main():
         user_input = input('Введите команду: ')
         if user_input == 'p':
             search_name()
+        elif user_input == 'ap':
+            show_names()
         elif user_input == 'l':
             show_all_docs()
         elif user_input == 's':
